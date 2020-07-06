@@ -1,0 +1,12 @@
+.idea/
+*.iml
+*.ipynb
+*.r
+*.csv
+*example*
+out/
+*.p
+lstm_model_*
+*.key
+*.scratch
+*/__pycache__/*
