@@ -42,13 +42,12 @@ class PrintSaveCallback(Callback):
             heappush(self.pq, to_save)
             self.model.save(filename)
 
-    def load_best_model(self):
+    def best_model(self) -> str:
         while len(self.pq) > 1:
             lower_score, to_delete = heappop(self.pq)
             print("Runner-up score: ", lower_score)
             os.remove(to_delete)
         winner_score, winner = heappop(self.pq)
         print("Winning score for cluster ", self.cluster, " is ", winner_score)
-        print("Loading winner model from file ", winner)
-        return models.load_model(winner)
+        return winner
 

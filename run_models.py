@@ -21,14 +21,14 @@ sys.path.append('./')
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run defined model on supplied data.')
     parser.add_argument('-training_file', dest="training_file", type=str, help='the full filename of the csv training file',
-                        default='training_data.csv')
+                        default='numerai_training_data.csv')
     parser.add_argument('-validation_file', dest="validation_file", type=str, help='the full filename of the csv testing file',
-                        default='tournament_data.csv')
+                        default='numerai_tournament_data.csv')
     parser.add_argument('-example_predictions', dest="example_predictions", type=str, help='the full filename of the csv example predictions file',
-                        default='example_predictions_target.csv')
+                        default=None)
     parser.add_argument('-identifier', dest="identifier", type=str, help='identifier to use in the output data', default='kazutsugi')
     parser.add_argument('-cluster_label', dest="cluster_label", type=str, help='identifier to use in the output data', default='CLUSTER')
-    parser.add_argument('-n_clusters', dest="n_clusters", type=int, help='number of clusters to cluser into', default=5)
+    parser.add_argument('-n_clusters', dest="n_clusters", type=int, help='number of clusters to cluser into', default=1)
     parser.add_argument('-cluster_sensitivity', dest="cluster_sensitivity", type=int, help='number of clusters to cluser into', default=1)
 
     args: argparse.Namespace = parser.parse_args()
@@ -43,7 +43,8 @@ if __name__ == '__main__':
     target_name = f"target_{args.identifier}"
     prediction_name = f"prediction_{args.identifier}"
     print("Example score to beat: ")
-    score_from_file(args.example_predictions, tournament_data, prediction_name, target_name)
+    if args.example_predictions is not None:
+        score_from_file(args.example_predictions, tournament_data, prediction_name, target_name)
 
     #  - create clustering models and train in separate process that then
     #     - classifies data according to model and returns the classified data somehow
